@@ -1,0 +1,30 @@
+{
+  "name": "node-pushover-notify",
+  "version": "0.0.1",
+  "description": "A wrapper for the pushover.net api",
+  "main": "index.js",
+  "dependencies": {
+    "request": "~2.36.0"
+  },
+  "devDependencies": {
+    "mocha": "^1.19.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cjazinski/node-pushover-notify.git"
+  },
+  "keywords": [
+    "node",
+    "pushover",
+    "notification"
+  ],
+  "author": "Christopher Jazinski <chris@jazinski.com> (http://www.jazinski.com/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cjazinski/node-pushover-notify/issues"
+  },
+  "homepage": "https://github.com/cjazinski/node-pushover-notify"
+}
