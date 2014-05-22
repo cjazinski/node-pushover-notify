@@ -1,11 +1,11 @@
 var req = require('request');
 
 function Pushover(args) {
-	this.token = '';
-	this.user = '';
-	this.priority = 0;
-	this.sound = 'pushover';
 	this.api = 'https://api.pushover.net/1/messages.json';
+	this.token = ''; //this must be specified or we will throw an error
+	this.user = ''; //optional (to send to multiple recipents);
+	this.priority = 0; //default
+	this.sound = 'pushover'; //default
 
 	if (!args.token) {
 		throw new Error('No Application token defined');
@@ -66,16 +66,15 @@ function Pushover(args) {
 		none - None (silent)
 	*/
 
-	//this can be empty we will accept it on the message as well
+	//this can be empty we will accept it on the sends as well
 	if (args.user)
 		this.user = args.user;
 
 	return this;
 }
 
- Pushover.prototype.send = function(arg1, arg2, arg3) {
-
- 	if( arguments.length == 2 ){
+Pushover.prototype.send = function(arg1, arg2, arg3) {
+	if( arguments.length == 2 ){
 		// (title, message)
 		if(!this.user) {
 			throw new Error('No user token defined');
@@ -90,18 +89,7 @@ function Pushover(args) {
 			sound: this.sound
 		};
 
-		req.post({
-			headers: {'content-type' : 'application/x-www-form-urlencoded'},
-			url: this.api,
-			form: params
-		}, function(error, response, body) {
-			if (error)
-				throw new Error('Error with Pushover.net API');
-			var r = JSON.parse(response.body);
-			if (r['status'] == 0) {
-				console.log(r['errors']);
-			} 
-		});
+		doPost(this.api, params);
 
 	} else { //Specifiying usertoken
 		this.user = arg1;
@@ -115,23 +103,49 @@ function Pushover(args) {
 			sound: this.sound
 		};
 
-		req.post({
-			headers: {'content-type' : 'application/x-www-form-urlencoded'},
-			url: this.api,
-			form: params
-		}, function(error, response, body) {
-			if (error)
-				throw new Error('Error with Pushover.net API');
-			var r = JSON.parse(response.body);
-			if (r['status'] == 0) {
-				console.log(r['errors']);
-			} 
-		});
+		doPost(this.api, params);
 	}
 
  }
 
- Pushover.prototype.sendSound = function(arg1, arg2, arg3, arg4) {
+Pushover.prototype.sendToDevice = function(arg1, arg2, arg3, arg4) {
+
+ 	if( arguments.length == 3 ){
+		// (title, message)
+		if(!this.user) {
+			throw new Error('No user token defined');
+			return;
+		}
+		var params = {
+			token: this.token,
+			user: this.user,
+			title: arg1,
+			message: arg2,
+			priority: this.priority,
+			sound: this.sound
+		};
+
+		doPost(this.api, params);
+
+	} else { //Specifiying usertoken
+		this.user = arg1;
+
+		var params = {
+			token: this.token,
+			user: this.user,
+			title: arg2,
+			message: arg3,
+			device: arg4,
+			priority: this.priority,
+			sound: this.sound
+		};
+
+		doPost(this.api, params);
+	}
+
+ }
+
+Pushover.prototype.sendSound = function(arg1, arg2, arg3, arg4) {
 
  	if( arguments.length == 3 ){
 		// (title, message)
@@ -149,18 +163,7 @@ function Pushover(args) {
 			sound: arg3
 		};
 
-		req.post({
-			headers: {'content-type' : 'application/x-www-form-urlencoded'},
-			url: this.api,
-			form: params
-		}, function(error, response, body) {
-			if (error)
-					throw new Error('Error with Pushover.net API');
-			var r = JSON.parse(response.body);
-			if (r['status'] == 0) {
-				console.log(r['errors']);
-			}
-		});
+		doPost(this.api, params);
 
 	} else { //Specify user key
 		this.user = arg1;
@@ -174,23 +177,12 @@ function Pushover(args) {
 			sound: arg4
 		};
 
-		req.post({
-			headers: {'content-type' : 'application/x-www-form-urlencoded'},
-			url: this.api,
-			form: params
-		}, function(error, response, body) {
-			if (error)
-				throw new Error('Error with Pushover.net API');
-			var r = JSON.parse(response.body);
-			if (r['status'] == 0) {
-				console.log(r['errors']);
-			} 
-		});
+		doPost(this.api, params);
 	}
 
  }
 
- Pushover.prototype.sendUrgent = function(arg1, arg2, arg3, arg4) {
+Pushover.prototype.sendUrgent = function(arg1, arg2, arg3, arg4) {
 
  	if( arguments.length == 3 ){
 		// (title, message)
@@ -208,18 +200,7 @@ function Pushover(args) {
 			sound: this.sound
 		};
 
-		req.post({
-			headers: {'content-type' : 'application/x-www-form-urlencoded'},
-			url: this.api,
-			form: params
-		}, function(error, response, body) {
-			if (error)
-					throw new Error('Error with Pushover.net API');
-			var r = JSON.parse(response.body);
-			if (r['status'] == 0) {
-				console.log(r['errors']);
-			}
-		});
+		doPost(this.api, params);
 
 	} else { //Specify user key
 		this.user = arg1;
@@ -233,19 +214,23 @@ function Pushover(args) {
 			sound: this.sound
 		};
 
-		req.post({
-			headers: {'content-type' : 'application/x-www-form-urlencoded'},
-			url: this.api,
-			form: params
-		}, function(error, response, body) {
-			if (error)
-				throw new Error('Error with Pushover.net API');
-			var r = JSON.parse(response.body);
-			if (r['status'] == 0) {
-				console.log(r['errors']);
-			} 
-		});
+		doPost(this.api, params);
 	}
  }
+
+function doPost(url, params) {
+ 	req.post({
+		headers: {'content-type' : 'application/x-www-form-urlencoded'},
+		url:  url,
+		form: params
+	}, function(error, response, body) {
+		if (error)
+			throw new Error('Error with Pushover.net API');
+		var r = JSON.parse(response.body);
+		if (r['status'] == 0) {
+			console.log(r['errors']);
+		} 
+	});
+}
 
 module.exports = exports = Pushover;
