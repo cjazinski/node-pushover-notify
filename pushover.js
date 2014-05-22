@@ -73,9 +73,6 @@ function Pushover(args) {
 	return this;
 }
 
-/*
- * send
- */
  Pushover.prototype.send = function(arg1, arg2, arg3) {
 
  	if( arguments.length == 2 ){
@@ -249,7 +246,6 @@ function Pushover(args) {
 			} 
 		});
 	}
-
  }
 
 module.exports = exports = Pushover;

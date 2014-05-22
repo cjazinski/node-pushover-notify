@@ -1,8 +1,8 @@
 var Pushover = require('./pushover');
 
 var push = new Pushover({
-	token:'', 
-	user:''
+	token:'pushover-application-token', 
+	user:'pushover-user-token'
 });
 
 // Sample Useage
