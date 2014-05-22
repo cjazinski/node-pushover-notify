@@ -1,4 +1,23 @@
 node-pushover-notify
 ====================
 
-module for node. Implements pushover api
+Author: Christopher Jazinski
+Version: 0.0.1a
+
+Description: module for node. Implements pushover api
+
+Currently only supports send(), sendUrgent(), sendSound();
+All of these methods will allow you to specify a user-token as the first parameter
+
+Usage:
+
+
+var Pushover = require('node-pushover-notify');
+var push = new Pushover({
+	token: 'pushover-application-token',
+	user: 'pushover-user-token' //optional
+});
+
+push.send(|user-token|, title, message);
+push.sendUrgent(|user-token|, title, message, priority);
+push.sendSound(|user-token|, title, message, sound);
