@@ -3,7 +3,7 @@ node-pushover-notify
 
 Author: Christopher Jazinski
 
-Version: 0.0.1a
+Version: 0.0.3a
 
 Description: module for node. Implements pushover api
 
@@ -20,6 +20,8 @@ var push = new Pushover({
 });
 
 push.send(|user-token|, title, message);
+
+push.sendToDevice([user-token], title, message, device);
 
 push.sendUrgent(|user-token|, title, message, priority);
 
