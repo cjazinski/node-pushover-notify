@@ -1,13 +1,10 @@
 {
   "name": "node-pushover-notify",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A wrapper for the pushover.net api",
   "main": "index.js",
   "dependencies": {
     "request": "~2.36.0"
-  },
-  "devDependencies": {
-    "mocha": "^1.19.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
