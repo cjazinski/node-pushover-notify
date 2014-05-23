@@ -3,7 +3,7 @@ node-pushover-notify
 
 Author: Christopher Jazinski
 
-Version: 0.0.3a
+Version: 0.0.4
 
 Description: module for node. Implements pushover api
 
