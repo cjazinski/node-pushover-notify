@@ -92,11 +92,10 @@ Pushover.prototype.send = function(arg1, arg2, arg3) {
 		doPost(this.api, params);
 
 	} else { //Specifiying usertoken
-		this.user = arg1;
 
 		var params = {
 			token: this.token,
-			user: this.user,
+			user: arg1,
 			title: arg2,
 			message: arg3,
 			priority: this.priority,
@@ -128,11 +127,10 @@ Pushover.prototype.sendToDevice = function(arg1, arg2, arg3, arg4) {
 		doPost(this.api, params);
 
 	} else { //Specifiying usertoken
-		this.user = arg1;
 
 		var params = {
 			token: this.token,
-			user: this.user,
+			user: arg1,
 			title: arg2,
 			message: arg3,
 			device: arg4,
@@ -166,11 +164,10 @@ Pushover.prototype.sendSound = function(arg1, arg2, arg3, arg4) {
 		doPost(this.api, params);
 
 	} else { //Specify user key
-		this.user = arg1;
 
 		var params = {
 			token: this.token,
-			user: this.user,
+			user: arg1,
 			title: arg2,
 			message: arg3,
 			priority: this.priority,
@@ -203,11 +200,9 @@ Pushover.prototype.sendUrgent = function(arg1, arg2, arg3, arg4) {
 		doPost(this.api, params);
 
 	} else { //Specify user key
-		this.user = arg1;
-
 		var params = {
 			token: this.token,
-			user: this.user,
+			user: arg1,
 			title: arg2,
 			message: arg3,
 			priority: arg4,
