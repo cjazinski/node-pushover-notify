@@ -3,7 +3,7 @@ var req = require('request');
 function Pushover(args) {
 	this.api = 'https://api.pushover.net/1/messages.json';
 	this.token = ''; //this must be specified or we will throw an error
-	this.user = ''; //optional (to send to multiple recipents);
+	this.users = []; //optional (to send to multiple recipents);
 	this.priority = 0; //default
 	this.sound = 'pushover'; //default
 
@@ -67,8 +67,8 @@ function Pushover(args) {
 	*/
 
 	//this can be empty we will accept it on the sends as well
-	if (args.user)
-		this.user = args.user;
+	if (args.users)
+		this.users = args.users;
 
 	return this;
 }
@@ -76,20 +76,22 @@ function Pushover(args) {
 Pushover.prototype.send = function(arg1, arg2, arg3) {
 	if( arguments.length == 2 ){
 		// (title, message)
-		if(!this.user) {
-			throw new Error('No user token defined');
+		if(!this.users) {
+			throw new Error('No user(s) token defined');
 			return;
 		}
-		var params = {
-			token: this.token,
-			user: this.user,
-			title: arg1,
-			message: arg2,
-			priority: this.priority,
-			sound: this.sound
-		};
+		for (var i = 0; i < this.users.length; i++) {
+			var params = {
+				token: this.token,
+				user: this.users[i],
+				title: arg1,
+				message: arg2,
+				priority: this.priority,
+				sound: this.sound
+			};
 
-		doPost(this.api, params);
+			doPost(this.api, params);
+		}
 
 	} else { //Specifiying usertoken
 
@@ -115,16 +117,18 @@ Pushover.prototype.sendToDevice = function(arg1, arg2, arg3, arg4) {
 			throw new Error('No user token defined');
 			return;
 		}
-		var params = {
-			token: this.token,
-			user: this.user,
-			title: arg1,
-			message: arg2,
-			priority: this.priority,
-			sound: this.sound
-		};
+		for (var i = 0; i < this.users.length; i++) {
+			var params = {
+				token: this.token,
+				user: this.users[i],
+				title: arg1,
+				message: arg2,
+				priority: this.priority,
+				sound: this.sound
+			};
 
-		doPost(this.api, params);
+			doPost(this.api, params);
+		}
 
 	} else { //Specifiying usertoken
 
@@ -152,16 +156,18 @@ Pushover.prototype.sendSound = function(arg1, arg2, arg3, arg4) {
 			return;
 		}
 
-		var params = {
-			token: this.token,
-			user: this.user,
-			title: arg1,
-			message: arg2,
-			priority: this.priority,
-			sound: arg3
-		};
+		for (var i = 0; i < this.users.length; i++) {
+			var params = {
+				token: this.token,
+				user: this.users[i],
+				title: arg1,
+				message: arg2,
+				priority: this.priority,
+				sound: arg3
+			};
 
-		doPost(this.api, params);
+			doPost(this.api, params);
+		}
 
 	} else { //Specify user key
 
@@ -187,17 +193,18 @@ Pushover.prototype.sendUrgent = function(arg1, arg2, arg3, arg4) {
 			throw new Error('No user token defined');
 			return;
 		}
+		for (var i = 0; i < this.users.length; i++) {
+			var params = {
+				token: this.token,
+				user: this.users[i],
+				title: arg1,
+				message: arg2,
+				priority: arg3,
+				sound: this.sound
+			};
 
-		var params = {
-			token: this.token,
-			user: this.user,
-			title: arg1,
-			message: arg2,
-			priority: arg3,
-			sound: this.sound
-		};
-
-		doPost(this.api, params);
+			doPost(this.api, params);
+		}
 
 	} else { //Specify user key
 		var params = {
