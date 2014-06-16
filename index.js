@@ -76,10 +76,10 @@ Pushover.prototype.send = function(arg1, arg2, arg3) {
 			throw new Error('No user(s) token defined');
 			return;
 		}
-		for (var i = 0; i < this.users.length; i++) {
+		for (user in this.users)
 			var params = {
 				token: this.token,
-				user: this.users[i].user,
+				user: user,
 				title: arg1,
 				message: arg2,
 				priority: this.priority,
@@ -113,10 +113,10 @@ Pushover.prototype.sendToDevice = function(arg1, arg2, arg3, arg4) {
 			throw new Error('No user token defined');
 			return;
 		}
-		for (var i = 0; i < this.users.length; i++) {
+		for (user in this.users)
 			var params = {
 				token: this.token,
-				user: this.users[i].user,
+				user: user,
 				title: arg1,
 				message: arg2,
 				priority: this.priority,
@@ -152,14 +152,14 @@ Pushover.prototype.sendSound = function(arg1, arg2, arg3, arg4) {
 			return;
 		}
 
-		for (var i = 0; i < this.users.length; i++) {
+		for (user in this.users)
 			var params = {
 				token: this.token,
-				user: this.users[i].user,
+				user: user,
 				title: arg1,
 				message: arg2,
 				priority: this.priority,
-				sound: arg3
+				sound: this.sound
 			};
 
 			doPost(this.api, params);
@@ -189,13 +189,13 @@ Pushover.prototype.sendUrgent = function(arg1, arg2, arg3, arg4) {
 			throw new Error('No user token defined');
 			return;
 		}
-		for (var i = 0; i < this.users.length; i++) {
+		for (user in this.users)
 			var params = {
 				token: this.token,
-				user: this.users[i].user,
+				user: user,
 				title: arg1,
 				message: arg2,
-				priority: arg3,
+				priority: this.priority,
 				sound: this.sound
 			};
 
