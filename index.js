@@ -76,17 +76,24 @@ Pushover.prototype.send = function(arg1, arg2, arg3) {
 			throw new Error('No user(s) token defined');
 			return;
 		}
-		for (user in this.users)
+		for (user in this.users) {
 			var params = {
 				token: this.token,
-				user: user,
+				user: this.users[user].user,
 				title: arg1,
 				message: arg2,
 				priority: this.priority,
 				sound: this.sound
 			};
-
-			doPost(this.api, params);
+			req.post({
+					headers: {'content-type' : 'application/x-www-form-urlencoded'},
+					url:  this.api,
+					form: params
+				}, function(error, response, body) {
+					if (response.statusCode != 200) {
+						console.log('????? Error: ' + response.body);
+					}					
+			});
 		}
 
 	} else { //Specifiying usertoken
@@ -100,7 +107,15 @@ Pushover.prototype.send = function(arg1, arg2, arg3) {
 			sound: this.sound
 		};
 
-		doPost(this.api, params);
+		req.post({
+			headers: {'content-type' : 'application/x-www-form-urlencoded'},
+			url:  this.api,
+			form: params
+		}, function(error, response, body) {
+			if (response.statusCode != 200) {
+				console.log('????? Error: ' + response.body);
+			}					
+		});
 	}
 
  }
@@ -113,17 +128,25 @@ Pushover.prototype.sendToDevice = function(arg1, arg2, arg3, arg4) {
 			throw new Error('No user token defined');
 			return;
 		}
-		for (user in this.users)
+		for (user in this.users) {
 			var params = {
 				token: this.token,
-				user: user,
+				user: this.users[user].user,
 				title: arg1,
 				message: arg2,
 				priority: this.priority,
 				sound: this.sound
 			};
 
-			doPost(this.api, params);
+			req.post({
+				headers: {'content-type' : 'application/x-www-form-urlencoded'},
+				url:  this.api,
+				form: params
+			}, function(error, response, body) {
+				if (response.statusCode != 200) {
+					console.log('????? Error: ' + response.body);
+				}					
+			});
 		}
 
 	} else { //Specifiying usertoken
@@ -138,7 +161,15 @@ Pushover.prototype.sendToDevice = function(arg1, arg2, arg3, arg4) {
 			sound: this.sound
 		};
 
-		doPost(this.api, params);
+		req.post({
+			headers: {'content-type' : 'application/x-www-form-urlencoded'},
+			url:  this.api,
+			form: params
+		}, function(error, response, body) {
+			if (response.statusCode != 200) {
+				console.log('????? Error: ' + response.body);
+			}					
+		});
 	}
 
  }
@@ -152,17 +183,25 @@ Pushover.prototype.sendSound = function(arg1, arg2, arg3, arg4) {
 			return;
 		}
 
-		for (user in this.users)
+		for (user in this.users) {
 			var params = {
 				token: this.token,
-				user: user,
+				user: this.users[user].user,
 				title: arg1,
 				message: arg2,
 				priority: this.priority,
-				sound: this.sound
+				sound: arg3
 			};
-
-			doPost(this.api, params);
+			
+			req.post({
+				headers: {'content-type' : 'application/x-www-form-urlencoded'},
+				url:  this.api,
+				form: params
+			}, function(error, response, body) {
+				if (response.statusCode != 200) {
+					console.log('????? Error: ' + response.body);
+				}					
+			});
 		}
 
 	} else { //Specify user key
@@ -176,7 +215,15 @@ Pushover.prototype.sendSound = function(arg1, arg2, arg3, arg4) {
 			sound: arg4
 		};
 
-		doPost(this.api, params);
+		req.post({
+			headers: {'content-type' : 'application/x-www-form-urlencoded'},
+			url:  this.api,
+			form: params
+		}, function(error, response, body) {
+			if (response.statusCode != 200) {
+				console.log('????? Error: ' + response.body);
+			}					
+		});
 	}
 
  }
@@ -189,17 +236,25 @@ Pushover.prototype.sendUrgent = function(arg1, arg2, arg3, arg4) {
 			throw new Error('No user token defined');
 			return;
 		}
-		for (user in this.users)
+		for (user in this.users) {
 			var params = {
 				token: this.token,
-				user: user,
+				user: this.users[user].user,
 				title: arg1,
 				message: arg2,
-				priority: this.priority,
+				priority: arg3,
 				sound: this.sound
 			};
 
-			doPost(this.api, params);
+			req.post({
+				headers: {'content-type' : 'application/x-www-form-urlencoded'},
+				url:  this.api,
+				form: params
+			}, function(error, response, body) {
+				if (response.statusCode != 200) {
+					console.log('????? Error: ' + response.body);
+				}					
+			});
 		}
 
 	} else { //Specify user key
@@ -212,23 +267,16 @@ Pushover.prototype.sendUrgent = function(arg1, arg2, arg3, arg4) {
 			sound: this.sound
 		};
 
-		doPost(this.api, params);
+		req.post({
+			headers: {'content-type' : 'application/x-www-form-urlencoded'},
+			url:  this.api,
+			form: params
+		}, function(error, response, body) {
+			if (response.statusCode != 200) {
+				console.log('????? Error: ' + response.body);
+			}					
+		});
 	}
  }
-
-function doPost(url, params) {
- 	req.post({
-		headers: {'content-type' : 'application/x-www-form-urlencoded'},
-		url:  url,
-		form: params
-	}, function(error, response, body) {
-		if (error)
-			throw new Error('Error with Pushover.net API');
-		var r = JSON.parse(response.body);
-		if (r['status'] == 0) {
-			console.log(r['errors']);
-		} 
-	});
-}
 
 module.exports = exports = Pushover;

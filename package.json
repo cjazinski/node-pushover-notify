@@ -1,6 +1,6 @@
 {
   "name": "node-pushover-notify",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A wrapper for the pushover.net api",
   "main": "index.js",
   "dependencies": {
