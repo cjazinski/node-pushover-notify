@@ -18,21 +18,17 @@ function Pushover(args) {
 		this.priority = args.priority;
 	/*
 	Lowest Priority (-2)
-
 	When the priority parameter is specified with a value of -2, messages will be considered lowest priority and will not generate any notification. On iOS, the application badge number will be increased.
 
 	Low Priority (-1)
-
 	Messages with a priority parameter of -1 will be considered low priority and will not generate any sound or vibration, but will still generate a popup/scrolling notification depending on the client operating system. Messages delivered during a user's quiet hours are sent as though they had a priority of (-1).
 
 	Normal Priority (0)
-
 	Messages sent without a priority parameter, or sent with the parameter set to 0, will have the default priority. These messages trigger sound, vibration, and display an alert according to the user's device settings. On iOS, the message will display at the top of the screen or as a modal dialog, as well as in the notification center. On Android, the message will scroll at the top of the screen and appear in the notification center.
 
 	If a user has quiet hours set and your message is received during those times, your message will be delivered as though it had a priority of -1.
 
 	High Priority (1)
-
 	Messages sent with a priority of 1 are high priority messages that bypass a user's quiet hours. These messages will always play a sound and vibrate (if the user's device is configured to) regardless of the delivery time. High-priority should only be used when necessary and appropriate.
 
 	High-priority messages are highlighted in red in the device clients.
@@ -83,7 +79,7 @@ Pushover.prototype.send = function(arg1, arg2, arg3) {
 		for (var i = 0; i < this.users.length; i++) {
 			var params = {
 				token: this.token,
-				user: this.users[i],
+				user: this.users[i].user,
 				title: arg1,
 				message: arg2,
 				priority: this.priority,
@@ -120,7 +116,7 @@ Pushover.prototype.sendToDevice = function(arg1, arg2, arg3, arg4) {
 		for (var i = 0; i < this.users.length; i++) {
 			var params = {
 				token: this.token,
-				user: this.users[i],
+				user: this.users[i].user,
 				title: arg1,
 				message: arg2,
 				priority: this.priority,
@@ -159,7 +155,7 @@ Pushover.prototype.sendSound = function(arg1, arg2, arg3, arg4) {
 		for (var i = 0; i < this.users.length; i++) {
 			var params = {
 				token: this.token,
-				user: this.users[i],
+				user: this.users[i].user,
 				title: arg1,
 				message: arg2,
 				priority: this.priority,
@@ -196,7 +192,7 @@ Pushover.prototype.sendUrgent = function(arg1, arg2, arg3, arg4) {
 		for (var i = 0; i < this.users.length; i++) {
 			var params = {
 				token: this.token,
-				user: this.users[i],
+				user: this.users[i].user,
 				title: arg1,
 				message: arg2,
 				priority: arg3,
